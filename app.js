@@ -5,9 +5,11 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 let session = require("express-session");
 let FileStore = require("session-file-store")(session);
+let passport = require("passport");
+let authenticate = require("./authenticate");
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+let indexRouter = require("./routes/index");
+let usersRouter = require("./routes/users");
 let dishRouter = require("./routes/dishRouter");
 let promoRouter = require("./routes/promoRouter");
 let leaderRouter = require("./routes/leaderRouter");
@@ -49,25 +51,20 @@ app.use(
   })
 );
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
 // Authentication
 function auth(req, res, next) {
-  console.log(req.session);
-
-  if (!req.session.user) {
+  if (!req.user) {
     var err = new Error("You are not authenticated!");
     err.status = 403;
     return next(err);
   } else {
-    if (req.session.user === "authenticated") {
-      next();
-    } else {
-      var err = new Error("You are not authenticated!");
-      err.status = 403;
-      return next(err);
-    }
+    next();
   }
 }
 
