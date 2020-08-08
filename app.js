@@ -1,21 +1,22 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
-let session = require("express-session");
-let FileStore = require("session-file-store")(session);
-let passport = require("passport");
-let authenticate = require("./authenticate");
-let config = require("./config");
-
-let indexRouter = require("./routes/index");
-let usersRouter = require("./routes/users");
-let dishRouter = require("./routes/dishRouter");
-let promoRouter = require("./routes/promoRouter");
-let leaderRouter = require("./routes/leaderRouter");
-
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const session = require("express-session");
+const FileStore = require("session-file-store")(session);
+const passport = require("passport");
 const mongoose = require("mongoose");
+
+const authenticate = require("./authenticate");
+const config = require("./config");
+
+// ROUTES
+const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/users");
+const dishRouter = require("./routes/dishRouter");
+const promoRouter = require("./routes/promoRouter");
+const leaderRouter = require("./routes/leaderRouter");
 
 const Dishes = require("./models/dishes");
 
@@ -33,7 +34,7 @@ connect.then(
   }
 );
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
