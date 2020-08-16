@@ -20,8 +20,9 @@ dishRouter
         (dishes) => {
           res.status(200).json(dishes);
         },
-        (err) => next(err).catch((err) => next(err))
-      );
+        (err) => next(err)
+      )
+      .catch((err) => next(err));
   })
 
   .post(
